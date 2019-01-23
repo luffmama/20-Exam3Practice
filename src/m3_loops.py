@@ -6,8 +6,8 @@ This problem provides practice at:
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Margaret Luffman.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 ###############################################################################
 # Students:
@@ -135,7 +135,16 @@ def run_test_practice_problem3():
     # SUGGESTION: Ask an assistant to CHECK your tests to confirm
     #             that they are adequate tests!
     ###########################################################################
-
+    # Test 15
+    expected =[]
+    actual = practice_problem3(1,0,15)
+    print("Test 15 expected:", expected)
+    print("Actual", actual)
+    # Test 16
+    expected =[3,4]
+    actual = practice_problem3(3,5,18)
+    print("Test 16 expected:", expected)
+    print("Actual", actual)
 
 def practice_problem3(start, n, threshold):
     """
@@ -217,6 +226,23 @@ def practice_problem3(start, n, threshold):
     #    DIFFICULTY:      5
     #    TIME ESTIMATE:   < 15 minutes.
     ###########################################################################
+    if n == 0:
+        return []
+    s = []
+    if threshold > math.sqrt(2):
+        for k in range(start,n):
+            s = s + [k]
+        return s
+    num = start
+    while True:
+            if len(s) < n:
+                if math.cos(num) + math.sin(num) > threshold:
+                    s = s + [num]
+                num = num + 1
+            if len(s) == n:
+                break
+
+    return s
 
 
 # -----------------------------------------------------------------------------
