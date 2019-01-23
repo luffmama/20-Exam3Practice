@@ -6,8 +6,8 @@ This problem provides practice at:
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Margaret Luffman.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 ###############################################################################
 # Students:
@@ -30,7 +30,7 @@ Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
 ###############################################################################
 
 import rosegraphics as rg
-
+import math
 
 def main():
     """ Calls the   TEST   functions in this module. """
@@ -90,7 +90,7 @@ def hourglass(window, n, point, radius, color):
     a color that rosegraphics understands.
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #       We provided some tests for you (above).
     # -------------------------------------------------------------------------
     ###########################################################################
@@ -102,7 +102,31 @@ def hourglass(window, n, point, radius, color):
     #    DIFFICULTY:      8
     #    TIME ESTIMATE:  25 minutes (warning: this problem is challenging)
     # -------------------------------------------------------------------------
-
+    centercircle= rg.Circle(point,radius)
+    centercircle.fill_color = color
+    centercircle.attach_to(window)
+    x = point.x
+    y = point.y
+    #upper triangle
+    for k in range(n):
+        for j in range(k+1):
+            ncircle = rg.Circle(rg.Point(x,y),radius)
+            ncircle.fill_color = color
+            ncircle.attach_to(window)
+            x = x + 2*radius
+        x = point.x - (k+1)*radius
+        y = point.y - math.sqrt(3)*(k+1)*radius
+    x = point.x
+    y = point.y
+    for i in range(n):
+        for l in range(i+1):
+            ncircle = rg.Circle(rg.Point(x, y), radius)
+            ncircle.fill_color = color
+            ncircle.attach_to(window)
+            x = x + 2 * radius
+        x = point.x - (i + 1) * radius
+        y = point.y + math.sqrt(3) * (i + 1) * radius
+    window.render()
 
 def run_test_many_hourglasses():
     """ Tests the    many_hourglasses    function. """
@@ -164,7 +188,7 @@ def many_hourglasses(window, square, m, colors):
     each of which denotes a color that rosegraphics understands.
     """
     # -------------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #       We provided some tests for you (above).
     # -------------------------------------------------------------------------
     ###########################################################################
@@ -180,6 +204,26 @@ def many_hourglasses(window, square, m, colors):
     #                         a correct "hourglass" function above)
     #    TIME ESTIMATE:  20 minutes (warning: this problem is challenging)
     # -------------------------------------------------------------------------
+    radius = square.length_of_each_side / 2
+    square.attach_to(window)
+    p1x = square.center.x - radius
+    p1y = square.center.y - radius
+    p2x = square.center.x + radius
+    p2y = square.center.y + radius
+    upleft = rg.Point(p1x,p1y)
+    lowright = rg.Point(p2x,p2y)
+    center = square.center
+    c8 = colors + colors + colors
+    for k in range(m):
+        hourglass(window,k+1,center,radius,c8[k])
+        center = rg.Point(center.x + radius*(2*k+3),center.y)
+        upleft.x = 2*radius*(k+1) + upleft.x
+        upleft.y = upleft.y - math.sqrt(3)*radius
+        lowright.x = 2*radius*(k+2) + lowright.x
+        lowright.y = lowright.y + math.sqrt(3)*radius
+        rect = rg.Rectangle(upleft, lowright)
+        rect.attach_to(window)
+
 
 
 # -----------------------------------------------------------------------------
